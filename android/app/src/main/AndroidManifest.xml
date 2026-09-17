@@ -36,14 +36,6 @@
     </application>
 
     <!-- Permissions -->
+
     <uses-permission android:name="android.permission.INTERNET" />
-
-    <!-- مجوزهای دسترسی به عکس‌ها و ذخیره‌سازی -->
-    <!-- برای اندروید ۱۲ و نسخه‌های قدیمی‌تر -->
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="32" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="29" />
-
-    <!-- برای اندروید ۱۳ به بالا (دسترسی اختصاصی به تصاویر) -->
-    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
-
 </manifest>

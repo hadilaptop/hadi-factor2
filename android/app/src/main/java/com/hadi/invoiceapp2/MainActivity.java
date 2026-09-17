@@ -1,4 +1,4 @@
-package com.hadi.invoiceapp;
+package com.hadi.invoiceapp2;
 
 import com.getcapacitor.BridgeActivity;
 

@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">factorvite</string>
-    <string name="title_activity_main">factorvite</string>
-    <string name="package_name">com.hadi.invoiceapp</string>
-    <string name="custom_url_scheme">com.hadi.invoiceapp</string>
+    <string name="app_name">هادی فاکتور</string>
+    <string name="title_activity_main">هادی فاکتور</string>
+    <string name="package_name">com.hadi.invoiceapp2</string>
+    <string name="custom_url_scheme">com.hadi.invoiceapp2</string>
 </resources>
