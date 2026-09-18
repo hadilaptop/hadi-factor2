@@ -335,8 +335,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 150px;
-    height: 150px;
+    width: 100px;
+    height: 100px;
     border: 1.5px dashed #a2c8e2;
     border-radius: 15px;
     background: rgba(255, 255, 255, 0.05);
@@ -410,7 +410,7 @@
     }
 
     .account-input-group {
-        padding: 3px 5px;
+        padding: 5px;
     }
 
     .account-input-group label {
@@ -425,17 +425,17 @@
     .account-input {
         margin-top: 3px;
         padding: 8px 15px;
-        font-size: 1.1rem;
-        border-radius: 12px;
+        font-size: 0.9rem;
+        border-radius: 10px;
     }
 
     .account-btn-save {
         margin-bottom: 10px;
-        width: 80%;
-        font-size: 1rem;
+        width: 60%;
+        font-size: 0.9rem;
         padding: 8px;
         border-radius: 10px;
-        border-width: 1.5px;
+        border: 1px solid #ffffff;
     }
 
     .account-subtitle {

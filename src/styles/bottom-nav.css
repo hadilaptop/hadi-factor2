@@ -3,17 +3,16 @@
     bottom: 0;
     left: 0;
     right: 0;
-    background: rgba(255, 255, 255, 0.96);
+    background: linear-gradient(135deg, #123c5e, #135d8e);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     display: flex;
     justify-content: space-around;
     align-items: center;
-    padding: 6px 12px;
+    padding: 6px 0px;
     padding-bottom: calc(8px + env(safe-area-inset-bottom, 15px));
     box-shadow: 0 -4px 20px rgba(13, 43, 67, 0.1);
     border-radius: 25px 25px 0 0;
-    border-top: 2px solid #3282b8;
     z-index: 9999999;
     direction: ltr; /* Keeps DOM order LTR, meaning first item is left */
 }
@@ -25,19 +24,25 @@
     justify-content: center;
     background: none;
     border: none;
-    color: #64748b;
+    outline: none;
+    color: #ffffff;
     gap: 3px;
     cursor: pointer;
-    transition: all 0.25s ease;
     padding: 4px 8px;
     flex: 1;
     -webkit-tap-highlight-color: transparent;
+    user-select: none;
+}
+
+.bottom-nav-item:focus,
+.bottom-nav-item:focus-visible {
+    outline: none;
 }
 
 /* آیکون دایره‌ای با استایل دکمه‌های اکشن */
 .bottom-nav-icon-circle {
-    width: 40px;
-    height: 40px;
+    width: 32px;
+    height: 32px;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -45,38 +50,35 @@
     color: #ffffff;
     padding: 0;
     flex-shrink: 0;
-    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transition: transform 0.2s ease, opacity 0.2s ease, box-shadow 0.2s ease;
 }
 
 .bottom-nav-icon-circle svg {
-    width: 22px;
-    height: 22px;
+    width: 20px;
+    height: 20px;
     stroke: #ffffff;
     fill: none;
-    transition: transform 0.2s ease;
 }
 
 /* رنگ آبی - استایل گرادینت دکمه‌های پیش‌نمایش و تنظیمات */
-.nav-circle-blue {
-    background: linear-gradient(180deg, #3282b8, #0f4c75);
-    box-shadow: 0 4px 10px rgba(15, 76, 117, 0.4);
-}
-
-/* رنگ سبز - استایل گرادینت دکمه ثبت و مشتری جدید */
+.nav-circle-blue,
 .nav-circle-green {
-    background: linear-gradient(180deg, #10b981, #059669);
-    box-shadow: 0 4px 10px rgba(16, 185, 129, 0.4);
+    background: linear-gradient(180deg, #3a95d2, #146ca7);
+    box-shadow: 0 4px 10px rgba(15, 76, 117, 0.4);
 }
 
 /* حالت غیرفعال */
 .bottom-nav-item:not(.active) .bottom-nav-icon-circle {
-    opacity: 0.78;
-    transform: scale(0.95);
+    opacity: 0.65;
+    transform: scale(1);
 }
 
-.bottom-nav-item:not(.active):hover .bottom-nav-icon-circle {
-    opacity: 1;
-    transform: scale(1.05);
+/* حالت هاور فقط برای موس/دسکتاپ بدون افکت پرش ناگهانی */
+@media (hover: hover) and (pointer: fine) {
+    .bottom-nav-item:not(.active):hover .bottom-nav-icon-circle {
+        opacity: 0.85;
+        transform: scale(1.04);
+    }
 }
 
 /* حالت فعال */
@@ -85,25 +87,19 @@
     transform: scale(1.08);
 }
 
-.bottom-nav-item.active .nav-circle-blue {
-    box-shadow: 0 6px 14px rgba(15, 76, 117, 0.55);
-}
-
+.bottom-nav-item.active .nav-circle-blue,
 .bottom-nav-item.active .nav-circle-green {
-    box-shadow: 0 6px 14px rgba(16, 185, 129, 0.55);
-}
-
-.bottom-nav-item.active {
-    color: #0f4c75;
+    box-shadow: 0 5px 12px rgba(15, 76, 117, 0.5);
 }
 
 .bottom-nav-item.active span {
-    color: #0f4c75;
+    color: #ffffff;
     font-weight: 800;
+    opacity: 1;
 }
 
 .bottom-nav-item:active .bottom-nav-icon-circle {
-    transform: scale(0.92);
+    transform: scale(0.95);
 }
 
 .bottom-nav-item span {
@@ -111,7 +107,8 @@
     font-weight: 700;
     font-family: inherit;
     line-height: 1.2;
-    transition: color 0.2s ease;
+    transition: opacity 0.2s ease, font-weight 0.2s ease;
+    opacity: 0.8;
 }
 
 @media print {

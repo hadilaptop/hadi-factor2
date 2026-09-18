@@ -37,7 +37,7 @@ export default function BottomNav({ currentPage, onNavigate, onAddCustomer }) {
         onClick={onAddCustomer}
         title="مشتری جدید"
       >
-        <div className="bottom-nav-icon-circle nav-circle-green">
+        <div className="bottom-nav-icon-circle nav-circle-blue">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
             <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
             <circle cx="8.5" cy="7" r="4"></circle>
