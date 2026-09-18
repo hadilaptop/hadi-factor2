@@ -27,7 +27,7 @@
     color: #ffffff;
     gap: 3px;
     cursor: pointer;
-    padding: 4px 8px;
+    padding-top: 2px;
     flex: 1;
     -webkit-tap-highlight-color: transparent;
     user-select: none;

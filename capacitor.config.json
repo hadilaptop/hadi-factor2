@@ -1,5 +1,11 @@
 {
   "appId": "com.hadi.invoiceapp2",
   "appName": "هادی فاکتور",
-  "webDir": "dist"
+  "webDir": "dist",
+  "plugins": {
+    "StatusBar": {
+      "backgroundColor": "#0f4c75",
+      "style": "DARK"
+    }
+  }
 }
