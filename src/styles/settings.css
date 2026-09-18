@@ -95,7 +95,11 @@
     padding: 40px;
     gap: 25px;
     /* فاصله هوشمند بین بخش‌ها */
-    animation: nativePageSettings 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    transform-origin: top center;
+    will-change: transform;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    animation: nativePageSettings 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 /* --- استایل مشترک کارت‌های فرم (تم و مشخصات شرکت) --- */
