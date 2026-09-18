@@ -7,6 +7,7 @@ import CustomerLedger from "./components/CustomerLedger";
 import Invoice from "./components/invoice";
 import Payment from "./components/payment";
 import Settings from "./components/settings";
+import BottomNav from "./components/BottomNav";
 import { useAppStore } from "./store/useAppStore";
 import "./styles/global.css";
 
@@ -157,6 +158,11 @@ export default function App() {
       {currentPage === "settings" && (
         <Settings onNavigate={handleNavigate} />
       )}
+      
+      {isInitialized && <BottomNav currentPage={currentPage} onNavigate={handleNavigate} onAddCustomer={() => {
+        setCustomerToEdit(null);
+        handleNavigate("account");
+      }} />}
     </div>
   );
 }

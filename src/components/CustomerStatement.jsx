@@ -2,7 +2,7 @@ import React, { useState, useMemo, useRef, useEffect } from "react";
 import html2canvas from "html2canvas";
 import { jsPDF } from "jspdf";
 import { Capacitor } from "@capacitor/core";
-import { saveFileWithCapacitorPermission } from "../utils/capacitorPermissions";
+import { saveFileWithCapacitorPermission, shareFileWithCapacitorPermission } from "../utils/capacitorPermissions";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import {
   formatNumber,
@@ -207,6 +207,12 @@ export default function CustomerStatement({ customer, onBack, onNavigate }) {
           showToast("دانلود آغاز شد");
         }
       } else if (action === 'share') {
+        if (Capacitor.isNativePlatform()) {
+           await shareFileWithCapacitorPermission(fileName, base64DataUrl, msg => showToast(msg));
+           setIsSaving(false);
+           return;
+        }
+
         if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
           try {
             await navigator.share({
@@ -221,8 +227,6 @@ export default function CustomerStatement({ customer, onBack, onNavigate }) {
               showToast("خطا در اشتراک‌گذاری");
             }
           }
-        } else if (Capacitor.isNativePlatform()) {
-          showToast("قابلیت اشتراک‌گذاری در این نسخه پشتیبانی نمی‌شود");
         } else {
           const blobUrl = URL.createObjectURL(blob);
           const link = document.createElement("a");
@@ -443,16 +447,6 @@ export default function CustomerStatement({ customer, onBack, onNavigate }) {
             <span className="ledger-subtitle">صورت حساب</span>
           </div>
           <div className="ledger-header-buttons">
-            <button
-              className="ledger-header-btn"
-              onClick={() => onNavigate && onNavigate("dashboard")}
-              title="داشبورد"
-            >
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                <polyline points="9 22 9 12 15 12 15 22"></polyline>
-              </svg>
-            </button>
             <button
               className="ledger-header-btn"
               onClick={onBack}

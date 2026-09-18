@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, useMemo } from "react";
 import html2canvas from "html2canvas";
 import { jsPDF } from "jspdf";
 import { Capacitor } from "@capacitor/core";
-import { saveFileWithCapacitorPermission } from "../utils/capacitorPermissions";
+import { saveFileWithCapacitorPermission, shareFileWithCapacitorPermission } from "../utils/capacitorPermissions";
 import JalaliDatePickerModal from "./JalaliDatePickerModal";
 import CustomSelect from "./CustomSelect";
 import "../styles/invoice.css";
@@ -509,6 +509,12 @@ function Invoice({
           showToast("ذخیره شد");
         }
       } else if (action === 'share') {
+        if (Capacitor.isNativePlatform()) {
+           await shareFileWithCapacitorPermission(fileName, base64DataUrl, msg => showToast(msg));
+           setIsSaving(false);
+           return;
+        }
+
         let sharedViaWeb = false;
         if (navigator.canShare && navigator.canShare({ files: [file] })) {
           try {
@@ -579,36 +585,13 @@ function Invoice({
     setSaveSuccessMessage("");
   };
 
-  return <div id="invoice-view" className="invoice-view" data-theme={theme}>
+  return <div id="invoice-view" className="invoice-view pb-safe-bottom" data-theme={theme}>
       {/* Header */}
       <div className="invoice-top-header">
         <h2 className="invoice-page-title">
           {step === "form" ? currentInvoice ? "ویرایش فاکتور" : "صدور فاکتور جدید" : "نمایش فاکتور"}
         </h2>
         <div className="invoice-header-buttons">
-          {step === "form" && <>
-              <button className="invoice-settings-btn" onClick={() => {
-            sessionStorage.setItem("settingsReferrer", "invoice");
-            onNavigate("settings");
-          }} title="تنظیمات">
-                ⚙️
-              </button>
-              <button className="invoice-btn" onClick={() => {
-            sessionStorage.setItem("accountReferrer", "invoice");
-            onNavigate("account");
-          }} title="صورت حساب">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                  <line x1="12" y1="5" x2="12" y2="19"></line>
-                  <line x1="5" y1="12" x2="19" y2="12"></line>
-                </svg>
-              </button>
-            </>}
-          <button className="invoice-btn" onClick={() => onNavigate("dashboard")} title="داشبورد">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-              <polyline points="9 22 9 12 15 12 15 22"></polyline>
-            </svg>
-          </button>
           <button className="invoice-btn" onClick={handleBack} title="بازگشت">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
               <polyline points="9 10 4 15 9 20"></polyline>
@@ -773,7 +756,7 @@ function Invoice({
 
           {/* دکمه پیش نمایش و ثبت */}
           </div>
-          <div className="invoice-bottom-bar" style={{ opacity: 1, animation: 'none' }}>
+          <div className="invoice-bottom-bar" >
             <div className="invoice-bottom-actions-card" style={{ position: 'relative' }}>
               {/* Floating Export Menu */}
               

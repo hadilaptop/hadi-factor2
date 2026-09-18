@@ -91,7 +91,7 @@ function Settings({
                 <div className="settings-top-header">
                     <h2 className="settings-title">⚙️ تنظیمات فاکتور</h2>
                     <div className="settings-header-buttons">
-                        <button className="settings-back-btn" onClick={() => onNavigate("dashboard")} title="داشبورد"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></button>
+                        
 {/* اتصال دکمه بازگشت به تابع هوشمند */}
                         <button className="settings-back-btn" onClick={handleClose}>
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
@@ -103,7 +103,7 @@ function Settings({
                 </div>
 
                 {/* بدنه اسکرول‌شونده و کارت فرم */}
-                <div className="settings-page-content">
+                <div className="settings-page-content pb-safe-bottom">
 
                     {/* کارت انتخاب تم */}
                     <div className="settings-form-card">

@@ -290,12 +290,6 @@ export default function CustomerLedger({
           <div className="ledger-top-header">
             <h2 className="ledger-main-title">گردش حساب مشتری</h2>
             <div className="ledger-header-buttons">
-              <button className="ledger-header-btn" onClick={() => onNavigate("dashboard")} title="داشبورد">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                  <polyline points="9 22 9 12 15 12 15 22"></polyline>
-                </svg>
-              </button>
               <button className="ledger-header-btn" onClick={() => onNavigate("customers")} title="بازگشت">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                   <polyline points="9 10 4 15 9 20"></polyline>
@@ -339,12 +333,6 @@ export default function CustomerLedger({
                 </svg>
               </button>}
 
-            <button className="ledger-header-btn" onClick={() => onNavigate("dashboard")} title="داشبورد">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                <polyline points="9 22 9 12 15 12 15 22"></polyline>
-              </svg>
-            </button>
             <button id="closeLedgerBtn" className="ledger-header-btn" onClick={() => onNavigate("customers")} title="بازگشت به لیست مشتریان">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                 <polyline points="9 10 4 15 9 20"></polyline>

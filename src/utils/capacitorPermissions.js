@@ -145,3 +145,32 @@ export async function saveFileWithCapacitorPermission(
 
   return false;
 }
+
+import { Share } from '@capacitor/share';
+
+export async function shareFileWithCapacitorPermission(fileName, base64OrDataUrl, notifyError) {
+  try {
+    if (Capacitor.isNativePlatform()) {
+      const cleanBase64 = base64OrDataUrl.includes(",")
+        ? base64OrDataUrl.split(",")[1]
+        : base64OrDataUrl;
+      const writeResult = await Filesystem.writeFile({
+        path: fileName,
+        data: cleanBase64,
+        directory: Directory.Cache,
+        recursive: true,
+      });
+      await Share.share({
+        url: writeResult.uri,
+        title: 'اشتراک‌گذاری',
+      });
+      return true;
+    }
+  } catch (error) {
+    console.warn("Capacitor Share Error:", error);
+    if (typeof notifyError === "function") {
+      notifyError("خطا در اشتراک‌گذاری");
+    }
+  }
+  return false;
+}

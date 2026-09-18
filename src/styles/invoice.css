@@ -159,8 +159,7 @@
     transition: 0.2s;
 }
 
-.invoice-btn svg,
-.invoice-settings-btn svg {
+.invoice-btn svg {
     width: 55px;
     height: 55px;
 }
@@ -168,29 +167,6 @@
 .invoice-btn:hover {
     transform: scale(1.05);
     background: rgba(255, 255, 255, 0.25);
-}
-
-.invoice-settings-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: transparent;
-    border: none;
-    color: white;
-    font-size: 5rem;
-    /* For desktop */
-    height: 85px;
-
-    /* Match other buttons height */
-    cursor: pointer;
-    transition: transform 0.2s;
-    line-height: 0;
-    padding: 0;
-    padding-top: 16px;
-}
-
-.invoice-settings-btn:hover {
-    transform: scale(1.1);
 }
 
 /* ==================== استایل‌های بقیه بخش‌های فاکتور ==================== */
@@ -794,11 +770,11 @@
 .invoice-bottom-bar {
     background: none;
     position: fixed;
-    bottom: 0;
+    bottom: calc(75px + env(safe-area-inset-bottom, 15px));
     left: 0;
     right: 0;
     padding: 12px 20px;
-    padding-bottom: calc(12px + env(safe-area-inset-bottom, 15px));
+    padding-bottom: 12px;
     display: flex;
     justify-content: center;
     align-items: flex-start;
@@ -1465,18 +1441,12 @@
         height: 38px;
     }
 
-    .invoice-btn svg,
-    .invoice-settings-btn svg {
+    .invoice-btn svg {
+
         width: 22px;
         height: 22px;
     }
 
-    .invoice-settings-btn {
-        font-size: 1.95rem;
-        width: 38px;
-        height: 38px;
-        padding-top: 8px;
-    }
 }
 
 /* ==================== استایل ورودی تاریخ و دکمه تقویم شمسی ==================== */

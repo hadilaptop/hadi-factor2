@@ -34,8 +34,8 @@ function Account({
   };
 
   useEffect(() => {
+    /* eslint-disable react-hooks/set-state-in-effect */
     if (customerToEdit !== prevCustomerToEdit) {
-      
       if (customerToEdit) {
         setCustomerName(customerToEdit.name || '');
         setAddress(customerToEdit.address || '');
@@ -125,12 +125,6 @@ function Account({
             )}
           </div>
           <div className="crm-header-buttons">
-            <button className="crm-back-btn" onClick={() => onNavigate("dashboard")} title="داشبورد">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                <polyline points="9 22 9 12 15 12 15 22"></polyline>
-              </svg>
-            </button>
             <button id="closeAccountBtn" className="crm-back-btn" onClick={handleClose} title="بازگشت">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                 <polyline points="9 10 4 15 9 20"></polyline>
@@ -141,7 +135,7 @@ function Account({
         </div>
 
         {/* محتوای فرم */}
-        <div id="account-content" className="account-content">
+        <div id="account-content" className="account-content pb-safe-bottom">
           <form className="account-form-card" onSubmit={e => { e.preventDefault(); handleSave(); }}>
             <div className="account-input-group">
               <label>نام مشتری / شرکت :</label>
