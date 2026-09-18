@@ -11,10 +11,9 @@
     align-items: center;
     padding: 6px 0px;
     padding-bottom: calc(8px + env(safe-area-inset-bottom, 15px));
-    box-shadow: 0 -4px 20px rgba(13, 43, 67, 0.1);
     border-radius: 25px 25px 0 0;
     z-index: 9999999;
-    direction: ltr; /* Keeps DOM order LTR, meaning first item is left */
+    direction: ltr;
 }
 
 .bottom-nav-item {

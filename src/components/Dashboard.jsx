@@ -31,14 +31,6 @@ function Dashboard({ onNavigate, customerCount = 0, isInitialized = false, onOpe
     <div id="dashboard-view" className="dashboard-app-container">
       <div className="dash-header">
         <div className="dash-header-top">
-          <div>
-            <button
-              className="header-icon-btn"
-              onClick={() => onNavigate("settings")}
-            >
-              ⚙️
-            </button>
-          </div>
           <div className="dash-date">{currentDate}</div>
         </div>
         <div className="dash-header-title">سیستم مدیریت فاکتور و حسابداری</div>

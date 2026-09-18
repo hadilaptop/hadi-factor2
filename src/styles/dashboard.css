@@ -14,7 +14,7 @@
     will-change: transform;
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
-    animation: nativePagedashboard 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation: nativePagedashboard 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 .dashboard-app-container {
@@ -41,28 +41,16 @@
 
 .dash-header-top {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
-}
-
-.header-icon-btn {
-    background: transparent;
-    border: none;
-    color: white;
-    font-size: 3.5rem;
-    cursor: pointer;
-    transition: transform 0.2s;
-    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.header-icon-btn:hover {
-    transform: scale(1.1);
+    direction: ltr;
 }
 
 .dash-date {
     font-size: 2.2rem;
     font-weight: bold;
     color: #fff;
+    text-align: left;
 }
 
 .dash-header-title {
@@ -115,9 +103,9 @@
 
 .card-header {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
-    flex-direction: row-reverse;
+    direction: ltr;
     text-align: center;
 }
 
@@ -211,9 +199,5 @@
 
     .card-desc {
         font-size: .9rem;
-    }
-
-    .header-icon-btn {
-        font-size: 1.8rem;
     }
 }
