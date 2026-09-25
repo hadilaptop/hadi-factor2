@@ -89,7 +89,7 @@ export default function JalaliDatePickerModal({
         onClick={(e) => e.stopPropagation()}
       >
         <div className="jalali-picker-header">
-          <h3>انتخاب تاریخ شمسی</h3>
+          <h3>انتخاب تاریخ </h3>
           <button
             type="button"
             className="jalali-picker-close"

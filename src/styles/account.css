@@ -1,15 +1,29 @@
 /* ============================================================================
                           طراحی صفحه کامل ایجاد و ویرایش حساب
 ============================================================================ */
-@keyframes nativePageAccount {
+
+/* انیمیشن‌های ورود و خروج فقط برای محتوای صفحه (زیر هدر) */
+@keyframes slideContentInFromRight {
     0% {
-        opacity: 1;
-        transform: scale(0.5);
+        transform: translateX(100%);
+        opacity: 0;
     }
 
     100% {
+        transform: translateX(0);
         opacity: 1;
-        transform: scale(1);
+    }
+}
+
+@keyframes slideContentOutToRight {
+    0% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateX(100%);
+        opacity: 0;
     }
 }
 
@@ -24,6 +38,13 @@
     background: #eaf6fc;
     direction: rtl;
     z-index: 100000;
+}
+
+/* جلوگیری قطعی از محو شدن هدر و پس‌زمینه هنگام خروج */
+.account-overlay.is-closing-page,
+.account-overlay.is-closing-page .crm-top-header {
+    animation: none !important;
+    opacity: 1 !important;
 }
 
 .crm-top-header {
@@ -47,6 +68,7 @@
     overflow: hidden;
 }
 
+/* اعمال انیمیشن ورود از راست فقط به محتوای زیر هدر */
 .account-content {
     flex: 1;
     overflow-y: auto;
@@ -55,10 +77,12 @@
     align-items: center;
     padding: 40px;
     transform-origin: top center;
-    will-change: transform;
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-    animation: nativePageAccount 1s cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation: slideContentInFromRight 0.6s cubic-bezier(0.175, 0.885, 0.32, 1) forwards;
+}
+
+/* اعمال انیمیشن خروج به راست فقط به محتوای زیر هدر */
+.account-overlay.is-closing-page .account-content {
+    animation: slideContentOutToRight 0.2s ease-in forwards;
 }
 
 .account-form-card {
@@ -115,7 +139,6 @@
     padding: 20px 20px;
 }
 
-/* تغییر رنگ لیبل‌ها برای خوانایی روی پس‌زمینه تیره */
 .account-input-group label {
     margin-bottom: 20px;
     font-weight: 900;
@@ -125,7 +148,6 @@
     padding: 0 20px;
 }
 
-/* تغییر تم فیلدها به حالت شیشه‌ای و تاریک */
 .account-input {
     width: 100%;
     padding: 25px 25px;
@@ -140,7 +162,6 @@
     text-align: right !important;
 }
 
-/* افکت فیلدها هنگام تایپ */
 .account-input:focus {
     border-color: #ffffff;
     background: rgba(20, 58, 123, 0.2);
@@ -148,7 +169,6 @@
     box-shadow: 0 0 0 5px rgba(255, 255, 255, 0.1);
 }
 
-/* تنظیم رنگ متن راهنمای درون فیلد (Placeholder) */
 .account-input::placeholder {
     color: #b3d4e6;
 }
@@ -182,6 +202,41 @@
 /* ============================================================================
                 ۲. استایل‌های مودال دوم: هشدار سیستم (Alert)
 ============================================================================ */
+
+@keyframes slideInFromLeft {
+    0% {
+        opacity: 0;
+        transform: translateX(-80px) scale(0.95);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+    }
+}
+
+@keyframes slideOutToLeft {
+    0% {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateX(-50px) scale(0.95);
+    }
+}
+
+@keyframes fadeOutOverlay {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
 .custom-alert-overlay {
     position: fixed;
     top: 0;
@@ -199,7 +254,11 @@
     justify-content: center;
 }
 
-.custom-alert-box {
+.custom-alert-overlay.is-closing {
+    animation: fadeOutOverlay 0.2s ease forwards;
+}
+
+.account-alert-box {
     max-width: 720px;
     width: 100%;
     border-radius: 30px;
@@ -209,16 +268,23 @@
     border: 1px solid #adc7d8;
     box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15);
     box-sizing: border-box;
-    animation: scaleUpAlert 0.2s ease-out;
+    animation: slideInFromLeft 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
     padding: 35px;
+}
+
+.custom-alert-overlay.is-closing .account-alert-box {
+    animation: slideOutToLeft 0.2s ease forwards;
 }
 
 .custom-alert-icon-bg {
     background: rgba(245, 158, 11, 0.12);
-    margin: 0 auto;
-    width: fit-content;
-    padding: 18px;
+    margin: 0 auto 15px auto;
+    width: 55px;
+    height: 55px;
     border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .custom-alert-title {
@@ -234,10 +300,10 @@
 }
 
 .custom-alert-btn {
-    width: 100%;
+    width: 70%;
     padding: 16px 0;
     font-size: 1.7rem;
-    background-color: #0f4c75;
+    background-color: #145d8e;
     color: #ffffff;
     border: none;
     border-radius: 14px;
@@ -256,54 +322,9 @@
     transform: translateY(0);
 }
 
-@keyframes scaleUpAlert {
-    0% {
-        opacity: 0;
-        transform: scale(0.9);
-    }
-
-    100% {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
-
-@media (max-width: 768px) {
-    .custom-alert-box {
-        padding: 25px 20px;
-        border-radius: 20px;
-        width: 90%;
-    }
-
-    .custom-alert-icon-bg {
-        padding: 12px;
-    }
-
-    .custom-alert-icon-bg svg {
-        width: 50px;
-        height: 50px;
-    }
-
-    .custom-alert-title {
-        font-size: 1.2rem;
-        margin-bottom: 15px;
-    }
-
-    .custom-alert-btn {
-        padding: 12px 0;
-        font-size: 1rem;
-        border-radius: 10px;
-    }
-
-    .custom-file-upload {
-        height: 120px;
-        width: 120px;
-    }
-
-    #upload-text-indicator {
-        font-size: .8rem;
-    }
-}
+/* ============================================================================
+                ۳. سایر عناصر فرم و رسانه‌ها (Media Queries)
+============================================================================ */
 
 .account-form-group {
     display: flex;
@@ -418,10 +439,8 @@
         margin-bottom: 8px;
         font-weight: 700;
         font-size: 0.9rem;
-        padding:  10px;
+        padding: 10px;
     }
-
-
 
     .account-input {
         margin-top: 3px;
@@ -442,7 +461,93 @@
     .account-subtitle {
         font-size: 0.8rem;
     }
+
     .profile-upload-group {
-    margin: 0px;
+        margin: 0px;
+    }
+
+    .account-alert-box {
+        padding: 15px 10px;
+        border-radius: 20px;
+        width: 80%;
+    }
+
+    .custom-alert-icon-bg {
+        padding: 7px;
+    }
+
+    .custom-alert-icon-bg svg {
+        width: 50px;
+        height: 50px;
+    }
+
+    .custom-alert-title {
+        font-size: 1.2rem;
+        margin-bottom: 15px;
+    }
+
+    .account-custom-element {
+        margin-bottom: 15px;
+    }
+
+    .custom-alert-btn {
+        padding: 12px 0;
+        font-size: 1rem;
+        border-radius: 10px;
+    }
+
+    .custom-file-upload {
+        height: 120px;
+        width: 120px;
+    }
+
+    #upload-text-indicator {
+        font-size: .8rem;
+    }
 }
+
+/* ============================================================================
+               طراحی جدید بخش پیش‌نمایش و حذف عکس پروفایل
+============================================================================ */
+.account-attachment-preview-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 18px;
+    border-radius: 18px;
+    border: 1px dashed rgba(255, 255, 255, 0.3);
+}
+
+.account-attachment-preview-box img {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.account-remove-att-btn {
+    background: #ef4444;
+    color: #ffffff;
+    border: none;
+    padding: 8px 18px;
+    border-radius: 10px;
+    font-weight: 800;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+}
+
+.account-remove-att-btn:hover {
+    background: #dc2626;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(220, 38, 38, 0.4);
+}
+
+.account-remove-att-btn:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 8px rgba(220, 38, 38, 0.3);
 }

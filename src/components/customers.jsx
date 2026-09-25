@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo } from "react";
 import "../styles/customers.css";
 import { getCustomerCode, toPersianDigits } from "../utils/invoiceHelpers";
+
 function Customers({
   onNavigate,
   customers = [],
@@ -10,6 +11,7 @@ function Customers({
   onOpenNewAccountPage
 }) {
   const [searchQuery, setSearchQuery] = useState("");
+  const [isClosingPage, setIsClosingPage] = useState(false); // استیت مدیریت خروج صفحه
 
   // استیت‌های مدیریت منوی سه نقطه و مودال حذف
   const [activeDropdown, setActiveDropdown] = useState(null);
@@ -35,6 +37,7 @@ function Customers({
       window.removeEventListener("click", handleGlobalClick, true);
     };
   }, [activeDropdown]);
+  
   const filteredCustomers = useMemo(() => {
     if (!searchQuery || !searchQuery.trim()) return customers;
     const query = searchQuery.trim().toLowerCase();
@@ -44,9 +47,14 @@ function Customers({
       return nameMatch || phoneMatch;
     });
   }, [customers, searchQuery]);
+  
   const handleClose = () => {
-    onNavigate("dashboard");
+    setIsClosingPage(true);
+    setTimeout(() => {
+      onNavigate("dashboard");
+    }, 200); // 200 میلی‌ثانیه صبر می‌کند تا انیمیشن خروج تمام شود
   };
+  
   const handleAddCustomer = () => {
     sessionStorage.setItem("accountReferrer", "customers");
     onOpenNewAccountPage();
@@ -83,7 +91,9 @@ function Customers({
     }
     closeDeleteModal();
   };
-  return <div id="customers-view" className="modal-overlay">
+  
+  return (
+    <div id="customers-view" className={`modal-overlay ${isClosingPage ? 'is-closing-page' : ''}`}>
       <div className="modal-content customers-modal-content">
         {/* ===== هدر ===== */}
         <div className="customers-top-header">
@@ -182,7 +192,7 @@ function Customers({
         {deleteModalData && <div className={`customer-modal-overlay ${isClosingDeleteModal ? "is-closing" : ""}`} onClick={closeDeleteModal}>
             <div className="customer-modal-box" onClick={e => e.stopPropagation()}>
               <div className="customer-modal-icon-bg">
-                <svg className="customer-modal-svg" /* این کلاس اضافه شد */ viewBox="0 0 24 24" fill="none" stroke="#ff5c5c" strokeLinecap="round" strokeLinejoin="round">
+                <svg className="customer-modal-svg" viewBox="0 0 24 24" fill="none" stroke="#ff5c5c" strokeLinecap="round" strokeLinejoin="round">
                   <polyline points="3 6 5 6 21 6"></polyline>
                   <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
                   <line x1="10" y1="11" x2="10" y2="17"></line>
@@ -207,6 +217,7 @@ function Customers({
             </div>
           </div>}
       </div>
-    </div>;
+    </div>
+  );
 }
 export default Customers;

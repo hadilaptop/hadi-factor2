@@ -1,16 +1,14 @@
 /* =========================================
    انیمیشن‌ها (Keyframes)
    ========================================= */
-@keyframes nativePageCustomers {
-    0% {
-        opacity: 0;
-        transform: translateY(12px);
-    }
+@keyframes slideContentInFromRight {
+    0% { transform: translateX(100%); opacity: 0; }
+    100% { transform: translateX(0); opacity: 1; }
+}
 
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
+@keyframes slideContentOutToRight {
+    0% { transform: translateX(0); opacity: 1; }
+    100% { transform: translateX(100%); opacity: 0; }
 }
 
 @keyframes dropdownOpen {
@@ -54,6 +52,18 @@
    ========================================= */
 .modal-overlay {
     display: flex;
+}
+
+/* جلوگیری از محو شدن پس‌زمینه و هدر هنگام خروج */
+.modal-overlay.is-closing-page .customers-modal-content,
+.modal-overlay.is-closing-page .customers-top-header {
+    animation: none !important;
+    opacity: 1 !important;
+}
+
+/* اعمال انیمیشن خروج به راست فقط به محتوای زیر هدر */
+.modal-overlay.is-closing-page .customers-list {
+    animation: slideContentOutToRight 0.2s ease-in forwards !important;
 }
 
 .customers-modal-content {
@@ -238,8 +248,9 @@
     overflow-y: auto;
     overflow-x: hidden;
     width: 100%;
-    will-change: opacity, transform;
-    animation: nativePageCustomers 0.25s ease-out forwards;
+    transform-origin: top center;
+    will-change: transform, opacity;
+    animation: slideContentInFromRight 0.6s cubic-bezier(0.175, 0.885, 0.32, 1) forwards;
     -webkit-overflow-scrolling: touch;
 }
 

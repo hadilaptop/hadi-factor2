@@ -766,7 +766,7 @@
 .invoice-bottom-bar {
     background: none;
     position: fixed;
-    bottom: calc(75px + env(safe-area-inset-bottom, 15px));
+    bottom: calc(60px + env(safe-area-inset-bottom, 15px));
     left: 0;
     right: 0;
     padding: 12px 20px;
@@ -785,14 +785,15 @@
     -webkit-backdrop-filter: blur(12px);
     border: 2px solid #3282b8 !important;
     border-radius: 40px;
-    padding: 8px 18px;
+    padding: 5px 15px;
     box-shadow: 0 8px 25px rgba(13, 43, 67, 0.2) !important;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 12px;
+    gap: 16px;
     max-width: 480px;
     width: auto;
+    position: relative;
 }
 
 .save-ledger-btn {
@@ -1522,66 +1523,6 @@
     font-size: 1.2rem;
 }
 
-/* ==================== Native CSS Animations ==================== */
-@keyframes invoiceFormEntry {
-    0% {
-        opacity: 1;
-        transform: scale(0.5);
-    }
-
-    100% {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
-
-@keyframes invoicePreviewEntry {
-    0% {
-        opacity: 1;
-        transform: scale(0.92) translateY(20px);
-    }
-
-    100% {
-        opacity: 1;
-        transform: scale(1) translateY(0);
-    }
-}
-
-@keyframes invoiceBottomBarEntry {
-    0% {
-        opacity: 0;
-        transform: translateY(40px);
-    }
-
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.invoice-form-container {
-    transform-origin: top center;
-    will-change: transform;
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-    animation: invoiceFormEntry 1s cubic-bezier(0.16, 1, 0.3, 1) both;
-}
-
-.main-container {
-    transform-origin: top center;
-    will-change: transform;
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-    animation: invoicePreviewEntry 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
-.invoice-bottom-bar {
-    opacity: 0;
-    /* starts hidden until animation starts */
-    animation: invoiceBottomBarEntry 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-    animation-delay: 0.2s;
-}
-
 .invoice-td-center {
     text-align: center;
 }
@@ -1703,4 +1644,138 @@
     to {
         transform: rotate(360deg);
     }
+}
+
+/* ============================================================================
+                      انیمیشن‌های کشویی صفحه و نوار پایین
+============================================================================ */
+
+/* انیمیشن ورود کشویی از راست */
+@keyframes slideContentInFromRight {
+    0% { transform: translateX(100%); opacity: 0; }
+    100% { transform: translateX(0); opacity: 1; }
+}
+
+/* انیمیشن خروج کشویی به راست */
+@keyframes slideContentOutToRight {
+    0% { transform: translateX(0); opacity: 1; }
+    100% { transform: translateX(100%); opacity: 0; }
+}
+
+/* انیمیشن ورود نوار دکمه‌ها از پایین (این بخش پاک شده بود) */
+@keyframes invoiceBottomBarEntry {
+    0% { opacity: 0; transform: translateY(60px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+/* انیمیشن خروج نوار دکمه‌ها به سمت پایین */
+@keyframes slideBottomBarOutDown {
+    0% { transform: translateY(0); opacity: 1; }
+    100% { transform: translateY(80px); opacity: 0; }
+}
+
+/* جلوگیری از محو شدن پس‌زمینه و هدر هنگام خروج */
+.invoice-view.is-closing-page,
+.invoice-view.is-closing-page .invoice-top-header {
+    animation: none !important;
+    opacity: 1 !important;
+}
+
+/* اعمال انیمیشن ورود کشویی فقط برای فرم و پیش‌نمایش فاکتور */
+.invoice-form-container,
+.main-container {
+    transform-origin: top center;
+    will-change: transform;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    animation: slideContentInFromRight 0.6s cubic-bezier(0.175, 0.885, 0.32, 1) forwards;
+}
+
+/* اعمال انیمیشن خروج به سمت راست فقط برای فرم و پیش‌نمایش */
+.invoice-view.is-closing-page .invoice-form-container,
+.invoice-view.is-closing-page .main-container {
+    animation: slideContentOutToRight 0.2s ease-in forwards !important;
+}
+
+/* اعمال انیمیشن ورود از پایین مخصوص نوار دکمه‌ها */
+.invoice-bottom-bar {
+    opacity: 0;
+    animation: invoiceBottomBarEntry 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards !important;
+    animation-delay: 0.15s !important;
+}
+
+/* اعمال انیمیشن خروج به سمت پایین برای نوار دکمه‌ها */
+.invoice-view.is-closing-page .invoice-bottom-bar {
+    animation: slideBottomBarOutDown 0.2s ease-in forwards !important;
+}
+
+/* استایل‌های دکمه‌های دایره‌ای در نوار پایین */
+.invoice-bottom-actions-card {
+    position: relative;
+}
+
+.save-ledger-btn-circle {
+    background: linear-gradient(180deg, #10b981, #059669);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(16, 185, 129, 0.4);
+    padding: 0;
+    border: none;
+    cursor: pointer;
+}
+
+.save-btn-circle, .share-btn-circle, .preview-btn {
+    background: linear-gradient(180deg, #3282b8, #0f4c75);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(15, 76, 117, 0.4);
+    padding: 0;
+    border: none;
+    cursor: pointer;
+}
+
+/* استایل‌های منوی بازشوی ذخیره و اشتراک‌گذاری (Export Menu) */
+.export-popup-menu {
+    position: absolute;
+    bottom: calc(100% + 15px);
+    background: #0f4c75;
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 130px;
+    z-index: 110;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    font-family: inherit;
+}
+
+.export-popup-btn {
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    background: transparent;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 800;
+    cursor: pointer;
+    text-align: center;
+    font-family: inherit;
+}
+
+.export-popup-divider {
+    height: 1px;
+    background: rgba(255, 255, 255, 0.1);
+    margin: 0 8px;
 }

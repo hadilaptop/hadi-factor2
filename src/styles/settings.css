@@ -1,16 +1,16 @@
 /* ============================================================================
                           طراحی صفحه کامل تنظیمات فاکتور
 ============================================================================ */
-@keyframes nativePageSettings {
-    0% {
-        opacity: 1;
-        transform: scale(0.5);
-    }
 
-    100% {
-        opacity: 1;
-        transform: scale(1);
-    }
+/* انیمیشن‌های ورود و خروج فقط برای محتوای صفحه (زیر هدر) */
+@keyframes slideContentInFromRight {
+    0% { transform: translateX(100%); opacity: 0; }
+    100% { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes slideContentOutToRight {
+    0% { transform: translateX(0); opacity: 1; }
+    100% { transform: translateX(100%); opacity: 0; }
 }
 
 .settings-page-overlay {
@@ -24,6 +24,13 @@
     background: #eaf6fc;
     direction: rtl;
     z-index: 100000;
+}
+
+/* جلوگیری قطعی از محو شدن هدر و پس‌زمینه هنگام خروج */
+.settings-page-overlay.is-closing-page,
+.settings-page-overlay.is-closing-page .settings-top-header {
+    animation: none !important;
+    opacity: 1 !important;
 }
 
 .settings-page-wrapper {
@@ -99,7 +106,12 @@
     will-change: transform;
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
-    animation: nativePageSettings 1s cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation: slideContentInFromRight 0.6s cubic-bezier(0.175, 0.885, 0.32, 1) forwards;
+}
+
+/* اعمال انیمیشن خروج به راست فقط به محتوای زیر هدر */
+.settings-page-overlay.is-closing-page .settings-page-content {
+    animation: slideContentOutToRight 0.2s ease-in forwards;
 }
 
 /* --- استایل مشترک کارت‌های فرم (تم و مشخصات شرکت) --- */
@@ -139,7 +151,6 @@
     box-sizing: border-box;
     background: rgba(255, 255, 255, 0.1);
     color: #ffffff;
-    text-align: right !important;
     text-align: right !important;
 }
 
@@ -203,7 +214,7 @@
 }
 
 /* ============================================================================
-               استایل‌های بخش آپلود لوگو (دقیقاً مشابه صفحه اکانت)
+               استایل‌های بخش آپلود لوگو
 ============================================================================ */
 .settings-hidden-file-input {
     display: none;
@@ -260,9 +271,8 @@
 }
 
 /* ============================================================================
-               باکس دکمه‌ها (طراحی فوق‌العاده جمع‌وجور، شیک و فلت)
+               باکس دکمه‌ها 
 ============================================================================ */
-/* باکس مستقل دکمه‌ها با پدینگ کمتر */
 .settings-actions-card {
     width: 100%;
     max-width: 800px;
@@ -277,7 +287,6 @@
     box-sizing: border-box;
 }
 
-/* استایل دکمه‌ها با سایز فشرده و بهینه شده */
 .settings-btn-save,
 .settings-btn-reset,
 .settings-btn-cancel {
@@ -299,7 +308,6 @@
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
 }
 
-/* افکت هاور دکمه‌ها */
 .settings-btn-save:hover,
 .settings-btn-reset:hover,
 .settings-btn-cancel:hover {
@@ -307,7 +315,6 @@
     filter: brightness(1.1);
 }
 
-/* افکت کلیک شدن دکمه (Active) */
 .settings-btn-save:active,
 .settings-btn-reset:active,
 .settings-btn-cancel:active {
@@ -315,7 +322,6 @@
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
-/* رنگ‌بندی دکمه‌ها */
 .settings-btn-save {
     background: linear-gradient(135deg, #10b981, #059669);
 }
@@ -414,7 +420,6 @@
         flex-shrink: 0;
     }
 
-    /* ریسپانسیو بخش آپلود لوگو */
     .settings-custom-file-upload {
         height: 120px;
         width: 120px;
@@ -424,9 +429,6 @@
         font-size: .8rem;
     }
 
-    /* =========================================
-       ریسپانسیو دکمه‌های موبایل (چیدمان هوشمند و فشرده در یک سطر) 
-       ========================================= */
     .settings-actions-card {
         flex-direction: row;
         flex-wrap: nowrap;
