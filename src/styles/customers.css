@@ -2,13 +2,13 @@
    انیمیشن‌ها (Keyframes)
    ========================================= */
 @keyframes slideContentInFromRight {
-    0% { transform: translateX(100%); opacity: 0; }
-    100% { transform: translateX(0); opacity: 1; }
+    0% { transform: translate3d(100%, 0, 0); opacity: 0; }
+    100% { transform: translate3d(0, 0, 0); opacity: 1; }
 }
 
 @keyframes slideContentOutToRight {
-    0% { transform: translateX(0); opacity: 1; }
-    100% { transform: translateX(100%); opacity: 0; }
+    0% { transform: translate3d(0, 0, 0); opacity: 1; }
+    100% { transform: translate3d(100%, 0, 0); opacity: 0; }
 }
 
 @keyframes dropdownOpen {
@@ -249,11 +249,20 @@
     overflow-x: hidden;
     width: 100%;
     transform-origin: top center;
+    
+    /* ===== کدهای اجبار کارت گرافیک (رفع لگ موبایل) ===== */
+    transform: translateZ(0); 
+    -webkit-transform: translateZ(0);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    perspective: 1000;
+    -webkit-perspective: 1000;
     will-change: transform, opacity;
+    /* =================================================== */
+
     animation: slideContentInFromRight 0.6s cubic-bezier(0.175, 0.885, 0.32, 1) forwards;
     -webkit-overflow-scrolling: touch;
 }
-
 .customers-table-container {
     padding: 0 40px 100px 40px;
     width: 100%;
@@ -864,12 +873,12 @@
 @keyframes customersTableEntry {
     0% {
         opacity: 0;
-        transform: translateX(-50px);
+        transform: translate3d(-50px, 0, 0);
     }
 
     100% {
         opacity: 1;
-        transform: translateX(0);
+        transform: translate3d(0, 0, 0);
     }
 }
 
